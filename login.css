@@ -1,0 +1,23 @@
+/*** 登陆界面 CSS ***/
+html{ background: #eee!important;}
+body.login {text-align: center;background: #eee; font-family: "Microsoft YaHei", Georgia, Geneva, times; }
+#login {width: 718px; height: 467px; background: url(images/loginpanel.png) no-repeat 0 50px;overflow: hidden; margin: 0 auto; text-align: left; position: relative; }
+#login h1 {display: none; }
+
+#loginform {width: 265px; height: 177px; background: url(images/login-bg.png) no-repeat; float: left; margin: 0; padding: 0; border: none; box-shadow: none; padding: 108px 0 0 355px; }
+.login form label {visibility: hidden; }
+.login form .forgetmenot label {visibility: visible; }
+.login form .forgetmenot {width: 115px; float: left; margin:25px 0px 0px -20px}
+.login form .input {visibility: visible; font-size: 13px; font-weight: normal; }
+#user_login {width: 160px; margin:-2px 0px 0px 30px;height: 25px; padding: 0 0 0 5px; }
+#user_pass {width: 160px; margin:3px 0px 0px 30px;height: 25px; padding: 0 0 0 5px; }
+
+.login  #backtoblog {position: fixed; top: 0; left: 0; margin: 0; padding: 0; background: #444; width: 100%; }
+.login  #backtoblog a {display: block; padding: 6px; margin-left: 10px; color: #f8f8f8!important; text-shadow: none; }
+
+.login  #wp-submit {width: 60px;height:21px;border: none; text-shadow: none;float: none; padding-left: 10px; margin:23px 0 0 30px}
+
+.login #nav {display:none;position: absolute; top: 145px; left: 0; }
+.login #nav a {color: #777!important; text-decoration: none; }
+
+#login_error {margin-bottom: -30px; }
