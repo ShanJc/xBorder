@@ -1,33 +1,17 @@
 <?php
 
-/////////////xBorder主题分类目录/////////
-class xBorder_widget1 extends WP_Widget{
+class xBorder_widget1 extends WP_Widget {
      function xBorder_widget1() {
-         $widget_ops = array('description' => '双栏的分类目录');
-         $this->WP_Widget('xBorder_widget1', 'xBorder主题分类目录', $widget_ops);
+         $widget_ops = array('description' => '主题自带的标签云小工具');
+         $this->WP_Widget('xBorder_widget1', 'X-标签云', $widget_ops);
      }
      function widget($args, $instance) {
          extract($args);
-         $title = apply_filters('widget_title',esc_attr($instance['title']));
          $limit = strip_tags($instance['limit']);
-		 $orderby = strip_tags($instance['orderby']);
-         echo $before_widget.$before_title.$title.$after_title;
+         echo $before_widget;
 ?> 
-         <ul  class="cate2row cf">
-			<?php wp_list_categories( array(
-			'style' => 'list',
-			'show_count' => $limit,
-			'hide_empty' => 1,
-			'hierarchical' => ture,
-			'title_li' => '',
-			'orderby' => $orderby,
-			'order' => 'ASC',
-			'echo' => 1
-			)
-			);
-		?>
-		</ul>		
-		 
+         <h3><div class="sidebartags">标签云</div></h3>
+		 <div class="tags"><?php wp_tag_cloud( array('unit' => 'px', 'smallest' => 12, 'largest' => 12, 'number' => $limit, 'format' => 'flat', 'orderby' => 'count', 'order' => 'DESC' )); ?></div>		
 <?php		 
          echo $after_widget;
      }
@@ -36,27 +20,15 @@ class xBorder_widget1 extends WP_Widget{
              return false;
          }
          $instance = $old_instance;
-         $instance['title'] = strip_tags($new_instance['title']);
          $instance['limit'] = strip_tags($new_instance['limit']);
-		 $instance['orderby'] = strip_tags($new_instance['orderby']);
          return $instance;
      }
      function form($instance) {
          global $wpdb;
-         $instance = wp_parse_args((array) $instance, array('title'=> '', 'limit' => '', 'orderby' => ''));
-         $title = esc_attr($instance['title']);
+         $instance = wp_parse_args((array) $instance, array('limit' => ''));
          $limit = strip_tags($instance['limit']);
-		 $orderby = strip_tags($instance['orderby']);
  ?>
-         <p>
-             <label for="<?php echo $this->get_field_id('title'); ?>">标题：<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label>
-         </p>
-         <p>
-             <label for="<?php echo $this->get_field_id('limit'); ?>">是否显示文章统计：<br>输入“1”为显示，输入“0”为不显示<input class="widefat" id="<?php echo $this->get_field_id('limit'); ?>" name="<?php echo $this->get_field_name('limit'); ?>" type="text" value="<?php echo $limit; ?>" /></label>
-         </p>
-		 <p>
-             <label for="<?php echo $this->get_field_id('orderby'); ?>">排序：<br>● 使用普通排序，输入“name”<br>● 使用 My Category Order 插件排序，输入“order”<input class="widefat" id="<?php echo $this->get_field_id('orderby'); ?>" name="<?php echo $this->get_field_name('orderby'); ?>" type="text" value="<?php echo $orderby; ?>" /></label>
-         </p>
+         <p><label for="<?php echo $this->get_field_id('limit'); ?>">显示数量：<input class="widefat" id="<?php echo $this->get_field_id('limit'); ?>" name="<?php echo $this->get_field_name('limit'); ?>" type="text" value="<?php echo $limit; ?>" /></label></p>
          <input type="hidden" id="<?php echo $this->get_field_id('submit'); ?>" name="<?php echo $this->get_field_name('submit'); ?>" value="1" />
  <?php
      }
@@ -65,13 +37,12 @@ class xBorder_widget1 extends WP_Widget{
  function xBorder_widget1_init() {
      register_widget('xBorder_widget1');
  }
- 
 
 ///////////////////
 class xBorder_widget2 extends WP_Widget {
      function xBorder_widget2() {
          $widget_ops = array('description' => '最新评论');
-         $this->WP_Widget('xBorder_widget2', 'xBorder主题最新评论', $widget_ops);
+         $this->WP_Widget('xBorder_widget2', 'X-最新评论', $widget_ops);
      }
      function widget($args, $instance) {
          extract($args);
@@ -147,59 +118,7 @@ class xBorder_widget2 extends WP_Widget {
  
 
 
-   ///////////////////最新文章////////////
-
-class xBorder_widget3 extends WP_Widget {
-     function xBorder_widget3() {
-         $widget_ops = array('description' => '配合主题样式，多了个悬停箭头出现');
-         $this->WP_Widget('xBorder_widget3', 'xBorder主题最新文章', $widget_ops);
-     }
-     function widget($args, $instance) {
-         extract($args);
-         $title = apply_filters('widget_title',esc_attr($instance['title']));
-         $limit = strip_tags($instance['limit']);
-         echo $before_widget.$before_title.$title.$after_title;
-?> 
-         <ul class="ulstyle">
-					<?php $posts = query_posts($query_string . "orderby=date&showposts=$limit" ); ?>  
-					<?php while(have_posts()) : the_post(); ?> 
-					<li><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_title(); ?></a><span class="sidebaraction"></span></li> 
-					<?php endwhile; ?> 		
-					</ul>	
-		 
-<?php		 
-         echo $after_widget;
-     }
-     function update($new_instance, $old_instance) {
-         if (!isset($new_instance['submit'])) {
-             return false;
-         }
-         $instance = $old_instance;
-         $instance['title'] = strip_tags($new_instance['title']);
-         $instance['limit'] = strip_tags($new_instance['limit']);
-         return $instance;
-     }
-     function form($instance) {
-         global $wpdb;
-         $instance = wp_parse_args((array) $instance, array('title'=> '', 'limit' => ''));
-         $title = esc_attr($instance['title']);
-         $limit = strip_tags($instance['limit']);
- ?>
-         <p>
-             <label for="<?php echo $this->get_field_id('title'); ?>">标题：<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label>
-         </p>
-         <p>
-             <label for="<?php echo $this->get_field_id('limit'); ?>">显示数量：<input class="widefat" id="<?php echo $this->get_field_id('limit'); ?>" name="<?php echo $this->get_field_name('limit'); ?>" type="text" value="<?php echo $limit; ?>" /></label>
-         </p>
-         <input type="hidden" id="<?php echo $this->get_field_id('submit'); ?>" name="<?php echo $this->get_field_name('submit'); ?>" value="1" />
- <?php
-     }
- }
- add_action('widgets_init', 'xBorder_widget3_init');
- function xBorder_widget3_init() {
-     register_widget('xBorder_widget3');
- }
- /////////////////
+  
  
  
 /////////////随机文章////////////
@@ -207,7 +126,7 @@ class xBorder_widget3 extends WP_Widget {
 class xBorder_widget4 extends WP_Widget {
      function xBorder_widget4() {
          $widget_ops = array('description' => '配合主题样式');
-         $this->WP_Widget('xBorder_widget4', 'xBorder主题随机文章', $widget_ops);
+         $this->WP_Widget('xBorder_widget4', 'X-随机文章', $widget_ops);
      }
      function widget($args, $instance) {
          extract($args);
@@ -256,10 +175,10 @@ class xBorder_widget4 extends WP_Widget {
  
  
  /////////////友情链接/////////
-class  newer_widget extends WP_Widget {
-     function newer_widget() {
+class  xBorder_widget5 extends WP_Widget {
+     function xBorder_widget5() {
          $widget_ops = array('description' => '双栏的友情链接，只支持一级目录');
-         $this->WP_Widget('newer_widget', 'xBorder友情链接', $widget_ops);
+         $this->WP_Widget('xBorder_widget5', 'X-友情链接', $widget_ops);
      }
      function widget($args, $instance) {
          extract($args);
@@ -270,7 +189,7 @@ class  newer_widget extends WP_Widget {
         echo $before_widget;
 ?> 
 <h3><div class="sidebarlinks">友情链接</div></h3>
-         <ul  class="cate2row link2">
+         <ul  class="tworow clearfix">
 			<?php wp_list_bookmarks( array(
 			'limit' => $limit,
 			'hide_empty' => 1,
@@ -319,16 +238,16 @@ class  newer_widget extends WP_Widget {
  <?php
      }
  }
- add_action('widgets_init', 'newer_widget_init');
- function newer_widget_init() {
-     register_widget('newer_widget');
+ add_action('widgets_init', 'xBorder_widget_init5');
+ function xBorder_widget_init5() {
+     register_widget('xBorder_widget5');
  }
  //////////////////////////////////////////////////////////
 
-class muzzz_widget11 extends WP_Widget {
-    function muzzz_widget11() {
+class xBorder_widget6 extends WP_Widget {
+    function xBorder_widget6() {
         $widget_ops = array('description' => '主题自带的边栏用户管理小工具');
-        $this->WP_Widget('muzzz_widget11', 'M-用户管理', $widget_ops);
+        $this->WP_Widget('xBorder_widget6', 'X-用户管理', $widget_ops);
     }
     function widget($args, $instance) {
         extract($args);
@@ -351,16 +270,16 @@ class muzzz_widget11 extends WP_Widget {
 <?php
     }
 }
-add_action('widgets_init', 'muzzz_widget11_init');
-function muzzz_widget11_init() {
-    register_widget('muzzz_widget11');
+add_action('widgets_init', 'xBorder_widget6_init');
+function xBorder_widget6_init() {
+    register_widget('xBorder_widget6');
 }
 //////////////////////////////////////////////////////////
 
-class muzzz_widget10 extends WP_Widget {
-    function muzzz_widget10() {
+class xBorder_widget7 extends WP_Widget {
+    function xBorder_widget7() {
         $widget_ops = array('description' => '主题自带的边栏网站统计小工具');
-        $this->WP_Widget('muzzz_widget10', 'M-网站统计', $widget_ops);
+        $this->WP_Widget('xBorder_widget7', 'X-网站统计', $widget_ops);
     }
     function widget($args, $instance) {
         extract($args);
@@ -384,14 +303,14 @@ class muzzz_widget10 extends WP_Widget {
 <?php
     }
 }
-add_action('widgets_init', 'muzzz_widget10_init');
-function muzzz_widget10_init() {
-    register_widget('muzzz_widget10');
+add_action('widgets_init', 'xBorder_widget7_init');
+function xBorder_widget7_init() {
+    register_widget('xBorder_widget7');
 }
-class muzzz_widget2 extends WP_Widget {
-    function muzzz_widget2() {
+class xBorder_widget8 extends WP_Widget {
+    function xBorder_widget8() {
         $widget_ops = array('description' => '主题自带的热门文章小工具');
-        $this->WP_Widget('muzzz_widget2', 'M-热门文章', $widget_ops);
+        $this->WP_Widget('xBorder_widget8', 'X-热门文章', $widget_ops);
     }
     function widget($args, $instance) {
         extract($args);
@@ -430,15 +349,15 @@ class muzzz_widget2 extends WP_Widget {
 <?php
     }
 }
-add_action('widgets_init', 'muzzz_widget2_init');
-function muzzz_widget2_init() {
-    register_widget('muzzz_widget2');
+add_action('widgets_init', 'xBorder_widget8_init');
+function xBorder_widget8_init() {
+    register_widget('xBorder_widget8');
 }
 
-class muzzz_widget3 extends WP_Widget {
-    function muzzz_widget3() {
+class xBorder_widget9 extends WP_Widget {
+    function xBorder_widget9() {
         $widget_ops = array('description' => '主题自带的文章分类小工具');
-        $this->WP_Widget('muzzz_widget3', 'M-文章分类', $widget_ops);
+        $this->WP_Widget('xBorder_widget9', 'X-文章分类', $widget_ops);
     }
     function widget($args, $instance) {
         extract($args);
@@ -457,14 +376,14 @@ class muzzz_widget3 extends WP_Widget {
 <?php
     }
 }
-add_action('widgets_init', 'muzzz_widget3_init');
-function muzzz_widget3_init() {
-    register_widget('muzzz_widget3');
+add_action('widgets_init', 'xBorder_widget9_init');
+function xBorder_widget9_init() {
+    register_widget('xBorder_widget9');
 }
-class muzzz_widget5 extends WP_Widget {
-    function muzzz_widget5() {
+class xBorder_widget10 extends WP_Widget {
+    function xBorder_widget10() {
         $widget_ops = array('description' => '主题自带的最近文章小工具');
-        $this->WP_Widget('muzzz_widget5', 'M-最近文章', $widget_ops);
+        $this->WP_Widget('xBorder_widget10', 'X-最近文章', $widget_ops);
     }
     function widget($args, $instance) {
         extract($args);
@@ -501,47 +420,11 @@ class muzzz_widget5 extends WP_Widget {
 <?php
     }
 }
-add_action('widgets_init', 'muzzz_widget5_init');
-function muzzz_widget5_init() {
-    register_widget('muzzz_widget5');
+add_action('widgets_init', 'xBorder_widget10_init');
+function xBorder_widget10_init() {
+    register_widget('xBorder_widget10');
 }
 
 //////////////////////////////////////////////////////////
-class muzzz_widget6 extends WP_Widget {
-     function muzzz_widget6() {
-         $widget_ops = array('description' => '主题自带的标签云小工具');
-         $this->WP_Widget('muzzz_widget6', 'M-标签云', $widget_ops);
-     }
-     function widget($args, $instance) {
-         extract($args);
-         $limit = strip_tags($instance['limit']);
-         echo $before_widget;
-?> 
-         <h3><div class="sidebartags">标签云</div></h3>
-		 <div class="tags"><?php wp_tag_cloud( array('unit' => 'px', 'smallest' => 12, 'largest' => 12, 'number' => $limit, 'format' => 'flat', 'orderby' => 'count', 'order' => 'DESC' )); ?></div>		
-<?php		 
-         echo $after_widget;
-     }
-     function update($new_instance, $old_instance) {
-         if (!isset($new_instance['submit'])) {
-             return false;
-         }
-         $instance = $old_instance;
-         $instance['limit'] = strip_tags($new_instance['limit']);
-         return $instance;
-     }
-     function form($instance) {
-         global $wpdb;
-         $instance = wp_parse_args((array) $instance, array('limit' => ''));
-         $limit = strip_tags($instance['limit']);
- ?>
-         <p><label for="<?php echo $this->get_field_id('limit'); ?>">显示数量：<input class="widefat" id="<?php echo $this->get_field_id('limit'); ?>" name="<?php echo $this->get_field_name('limit'); ?>" type="text" value="<?php echo $limit; ?>" /></label></p>
-         <input type="hidden" id="<?php echo $this->get_field_id('submit'); ?>" name="<?php echo $this->get_field_name('submit'); ?>" value="1" />
- <?php
-     }
- }
- add_action('widgets_init', 'muzzz_widget6_init');
- function muzzz_widget6_init() {
-     register_widget('muzzz_widget6');
- }
+
 ?>
