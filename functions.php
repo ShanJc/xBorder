@@ -369,30 +369,9 @@ function post_thumbnail( $width = 150,$height = 150 ){
 	}
 	add_action('pre_comment_on_post', 'CheckEmailAndName');
 
-	
-	function catch_first_image() {
-		global $post, $posts;
-		$first_img = '';
-		ob_start();
-		ob_end_clean();
-		$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
-		$first_img = $matches [1] [0];
-		if(empty($first_img)){
-			$random = mt_rand(1, 13);
-			echo get_bloginfo ( 'stylesheet_directory' );
-			echo '/images/random/'.$random.'.jpg';
-		}
-		return $first_img;
-	}
 include_once('functions/shortcode.php');
 include_once('functions/themeset.php');
 include_once('functions/newerwidget.php');
 include_once('functions/commentlists.php');
 include_once('functions/archives.php');
-
-
-
 ?>
-
-
-
