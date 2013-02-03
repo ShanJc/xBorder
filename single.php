@@ -23,15 +23,7 @@
 			<?php } else { ?> <!--默认类型--> 
 				      
 					   <h2><a href="<?php the_permalink() ?>" title="<?php the_title(); ?>" rel="bookmark"><?php the_title(); ?></a></h2> 	
-					  	 <div class="post-meta"> <span>
-      <?php the_time('D,g:h A'); ?>
-      </span>&nbsp;|&nbsp;<span>
-      <?php the_category(', ') ?>
-      </span>&nbsp;|&nbsp;<span>
-      超过<?php if(function_exists('the_views')) { the_views(); } ?>人围观
-      </span>&nbsp;|&nbsp;<span>
-      <?php comments_popup_link('还没有评论', '只有1条评论', '已有%条评论'); ?>
-      </span> </div>
+					  	 
     <!--.postMeta-->	<script type="text/javascript">
 	$(function(){
 		$("#share").hover(function(){if(!$(this).children("#share ul").is(":animated")){$(this).children("#share ul").slideDown("800");}},function(){$(this).children("#share ul").slideUp("400");});//willin
