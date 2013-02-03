@@ -20,31 +20,7 @@
 <?php endif; ?>
 
 <div id="msg_ie">您正在使用IE浏览器，请下载<a href="https://www.google.com/intl/zh-CN/chrome/browser/" target="blank">Chrome</a>已获得更好的体验。</div>
-<div class="longhu">龙虎榜</div>
-<div id="four">
-	<ul id="fourlist"></ul>
-	<a href="#" id="nowtime"></a>
-</div>
-<?php wp_footer(); ?>
-<script type="text/javascript">
-function currentTime(){  //JavaScript原生的获取当前时间函数
-var d = new Date(),str = '更新于： ';
- str += d.getHours()+':'; 
- str  += d.getMinutes()+':'; 
-str+= d.getSeconds(); 
-return str;
-}
-jQuery(document).ready(function($){
-	var Frl=$("#fourlist"),Ntm=$("#nowtime");
-	Frl.load("http://ceezi.com/four");  //jQuery里的Ajax方式一种 load，网页刷新直接加载我们之前新建的页面 four 里的内容到 #fourlist 里；
-	Ntm.text(currentTime());  //更新当前更新的时间戳；
-	Ntm.click(function(){  //点击 #nowtime 事件；
-		Frl.text("加大马力更新中...").load("http://ceezi.com/four");  //再次加载 four 页面，这个就是核心了～
-		Ntm.text(currentTime());
-		return false;
-	});
-});
-</script>
+
     
 	<script type="text/javascript" src="<?php bloginfo('template_url');?>/js/xBorder.js"></script>	
 	<script type="text/javascript">
