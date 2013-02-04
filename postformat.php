@@ -1,4 +1,5 @@
    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+   <div class="post">
 	<?php if (has_post_format( 'audio' )){ ?> <!--音频类型-->
 				<div class="musicbg">
 					<div class="musiccover"><img src="http://ceezi.com/img/defaultcover.png" alt="musiccover"></div>
@@ -31,19 +32,22 @@
     <h2><a href="<?php the_permalink() ?>" title="<?php the_title(); ?>" rel="bookmark">
       <?php the_title(); ?>
       </a></h2>
-    <div class="post-meta"> <span>
-      <?php the_time('D,g:h A'); ?>
-      </span>&nbsp;|&nbsp;<span><?php the_category(' ,');?></span>&nbsp;|&nbsp;<span>
-      超过<?php if(function_exists('the_views')) { the_views(); } ?>人围观
-      </span>&nbsp;|&nbsp;<span>
-      <?php comments_popup_link('还没有评论', '只有1条评论', '已有%条评论'); ?>
-      </span> </div>
-    <!--.postMeta-->
+    
 
     <div class="post-content">
       <?php the_content(__('readmore'));?>
     </div>
+	<div class="post-meta"> <span>
+      <?php the_time('m,d'); ?>
+      </span>&nbsp;/&nbsp;<span>
+      <?php the_category(', ') ?>
+      </span>&nbsp;/&nbsp;<span>
+      <?php if(function_exists('the_views')) { the_views(); } ?>&nbsp;Views
+      </span>&nbsp;/&nbsp;<span>
+      <?php comments_popup_link('No comment', '1 comment', '% comments'); ?>
+      </span> </div>
 		<?php } ?>
+		</div>
     <div class="sep"></div>
     <?php endwhile; endif;?>
 	
