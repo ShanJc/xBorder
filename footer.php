@@ -8,7 +8,7 @@
 </div>
 </div><!-- end #footer -->
 </footer>
-
+<?php wp_footer();?>
 <p class="link-back2top"><a href="#" title="Back to top">Back to top</a></p>
 
 
